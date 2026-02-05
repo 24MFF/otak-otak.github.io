@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Sistem Keuangan Sederhana untuk UMKM Makanan - Kelola pemasukan, pengeluaran, dan laba dengan mudah">
+    <title>Otak-Otak</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="otak-otak.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+
+<body>
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-title">Otak-Otak</h1>
+            <div class="splash-subtitle">UMKM</div>
+            <div class="splash-loader"></div>
+        </div>
+    </div>
+
+    <!-- Customer Page -->
+    <div id="customerPage" class="page active">
+        <header class="customer-header">
+            <button id="viewProfile" class="switch-btn profile-btn">Profil</button>
+            <h1>Otak-Otak</h1>
+            <button id="switchToAdmin" class="switch-btn">Admin</button>
+        </header>
+
+        <main class="container">
+            <section class="menu-section">
+                <div class="table-container">
+                    <table class="menu-table" id="menuTable">
+                        <thead>
+                            <tr>
+                                <th>Nama Menu</th>
+                                <th>Harga</th>
+                                <th>Jumlah</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="menuTableBody">
+                            <!-- Menu items will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Menu Cards -->
+                <div class="menu-cards" id="menuCards">
+                    <!-- Menu cards will be inserted here by JavaScript for mobile -->
+                </div>
+
+                <div class="total-display">
+                    <div class="total-label">Total Keseluruhan</div>
+                    <div class="total-amount" id="grandTotal">Rp 0</div>
+                </div>
+
+                <!-- Customer Name Input -->
+                <div class="customer-name-section">
+                    <label for="customerName" class="customer-name-label">
+                        <svg class="name-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Nama Pemesan
+                    </label>
+                    <input type="text" id="customerName" class="customer-name-input" placeholder="Masukkan nama Anda"
+                        maxlength="50">
+                </div>
+
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h3 class="contact-title">Hubungi Kami</h3>
+                    <div class="contact-links">
+                        <a href="tel:+6282315750980" class="contact-link phone-link">
+                            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                            <span class="contact-text">0823-1575-0980</span>
+                        </a>
+                        <a href="https://instagram.com/otakotak_umkm" target="_blank"
+                            class="contact-link instagram-link">
+                            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                            <span class="contact-text">@otakotak_umkm</span>
+                        </a>
+                        <a href="https://facebook.com/otakotakumkm" target="_blank" class="contact-link facebook-link">
+                            <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                            <span class="contact-text">Otak-Otak UMKM</span>
+                        </a>
+                    </div>
+                </div>
+
+                <button id="payButton" class="btn-primary btn-large" disabled>Bayar</button>
+            </section>
+        </main>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profilePage" class="page">
+        <header class="customer-header">
+            <button onclick="backFromProfile()" class="switch-btn back-btn">← Kembali</button>
+            <h1>Profil Perusahaan</h1>
+            <div class="header-spacer"></div>
+        </header>
+
+        <main class="container profile-container">
+            <!-- Hero Section -->
+            <section class="profile-hero">
+                <div class="hero-content">
+                    <h1 class="hero-title" id="profileCompanyName">Otak-Otak UMKM</h1>
+                    <p class="hero-subtitle" id="profileTagline">Otak-Otak Segar & Lezat</p>
+                    <p class="hero-description" id="profileDescription">
+                        Menyediakan otak-otak berkualitas dengan berbagai varian rasa. Dibuat dari bahan pilihan dan
+                        bumbu rahasia yang lezat.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="tel:+6282315750980" class="hero-btn primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                            Hubungi Kami
+                        </a>
+                        <a href="https://instagram.com/otakotak_umkm" target="_blank" class="hero-btn secondary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                            Follow Instagram
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Us Section -->
+            <section class="profile-about">
+                <h2 class="section-title">Tentang Kami</h2>
+                <div class="about-content">
+                    <p class="about-text">
+                        Kami adalah UMKM yang berdedikasi untuk menghadirkan otak-otak berkualitas tinggi dengan cita
+                        rasa autentik.
+                        Setiap produk dibuat dengan penuh perhatian menggunakan bahan-bahan pilihan dan resep
+                        turun-temurun yang telah
+                        disempurnakan selama bertahun-tahun.
+                    </p>
+                    <p class="about-text">
+                        Komitmen kami adalah memberikan pengalaman kuliner yang tak terlupakan dengan menjaga kualitas,
+                        kesegaran, dan cita rasa dalam setiap gigitan.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Mission & Vision -->
+            <section class="profile-mission-vision">
+                <div class="mv-grid">
+                    <div class="mv-card mission-card">
+                        <div class="mv-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="mv-title">Misi Kami</h3>
+                        <p class="mv-description">
+                            Menyediakan produk otak-otak berkualitas premium dengan harga terjangkau,
+                            mempertahankan cita rasa tradisional, dan memberikan pelayanan terbaik kepada setiap
+                            pelanggan.
+                        </p>
+                    </div>
+                    <div class="mv-card vision-card">
+                        <div class="mv-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3 class="mv-title">Visi Kami</h3>
+                        <p class="mv-description">
+                            Menjadi brand otak-otak terpercaya dan terdepan di Indonesia,
+                            dikenal dengan kualitas produk yang konsisten dan inovasi rasa yang terus berkembang.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Company Values -->
+            <section class="profile-values">
+                <h2 class="section-title">Nilai-Nilai Perusahaan</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="value-title">Kualitas Terjamin</h3>
+                        <p class="value-description">Hanya menggunakan bahan baku pilihan terbaik</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="value-title">Higienis & Aman</h3>
+                        <p class="value-description">Proses produksi yang bersih dan terjaga</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                            </svg>
+                        </div>
+                        <h3 class="value-title">Kepuasan Pelanggan</h3>
+                        <p class="value-description">Pelayanan ramah dan responsif</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="value-title">Inovasi Berkelanjutan</h3>
+                        <p class="value-description">Terus berinovasi dengan varian rasa baru</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Company Statistics -->
+            <section class="profile-stats">
+                <h2 class="section-title">Pencapaian Kami</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Tahun Pengalaman</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Pelanggan Puas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Varian Produk</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Bahan Segar</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Information -->
+            <section class="profile-contact">
+                <h2 class="section-title">Informasi Kontak</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="contact-title">Telepon</h3>
+                        <p class="contact-value" id="profilePhone">0823-1575-0980</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                        </div>
+                        <h3 class="contact-title">Alamat</h3>
+                        <p class="contact-value" id="profileAddress">Jakarta, Indonesia</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="contact-title">Jam Operasional</h3>
+                        <p class="contact-value" id="profileHours">08:00 - 20:00</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </div>
+                        <h3 class="contact-title">Instagram</h3>
+                        <p class="contact-value" id="profileInstagram">@otakotakumkm</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="profile-cta">
+                <div class="cta-content">
+                    <h2 class="cta-title">Siap Memesan?</h2>
+                    <p class="cta-description">Nikmati kelezatan otak-otak kami sekarang juga!</p>
+                    <button onclick="hideProfilePage()" class="cta-button">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        Pesan Sekarang
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminPage" class="page">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon"></span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-view="transactions">
+                    <span class="nav-icon"></span>
+                    <span class="nav-text">Transaksi</span>
+                </a>
+                <a href="#" class="nav-item" data-view="menu">
+                    <span class="nav-icon"></span>
+                    <span class="nav-text">Kelola Menu</span>
+                </a>
+                <a href="#" class="nav-item" data-view="profile">
+                    <span class="nav-icon"></span>
+                    <span class="nav-text">Profil Perusahaan</span>
+                </a>
+            </nav>
+            <button id="switchToCustomer" class="switch-btn sidebar-switch">Kembali ke Pemesanan</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="container">
+                <!-- Dashboard View -->
+                <div id="dashboardView" class="admin-view active">
+                    <h2 class="page-title">Dashboard Keuangan</h2>
+
+                    <div class="dashboard-cards">
+                        <div class="dashboard-card income-card">
+                            <div class="card-label">Total Pemasukan</div>
+                            <div class="card-value" id="totalIncome">Rp 0</div>
+                        </div>
+                        <div class="dashboard-card expense-card">
+                            <div class="card-label">Total Pengeluaran</div>
+                            <div class="card-value" id="totalExpense">Rp 0</div>
+                        </div>
+                        <div class="dashboard-card profit-card">
+                            <div class="card-label">Total Laba</div>
+                            <div class="card-value" id="totalProfit">Rp 0</div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Transaksi Terbaru</div>
+                    <div class="table-container">
+                        <table class="transaction-table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Keterangan</th>
+                                    <th>Jenis</th>
+                                    <th>Nominal</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardTransactionTable">
+                                <!-- Transactions will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Transactions View -->
+                <div id="transactionsView" class="admin-view">
+                    <h2 class="page-title">Kelola Transaksi</h2>
+
+                    <div class="form-container">
+                        <h3 class="form-title">Tambah Pengeluaran</h3>
+                        <form id="expenseForm">
+                            <div class="form-group">
+                                <label for="expenseDescription">Keterangan</label>
+                                <input type="text" id="expenseDescription" placeholder="Contoh: Beli bahan baku ikan"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expenseAmount">Nominal</label>
+                                <input type="number" id="expenseAmount" placeholder="Contoh: 500000" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expenseDate">Tanggal</label>
+                                <input type="date" id="expenseDate" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Simpan Pengeluaran</button>
+                        </form>
+                    </div>
+
+                    <div class="section-title">Semua Transaksi</div>
+                    <div class="table-container">
+                        <table class="transaction-table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Keterangan</th>
+                                    <th>Jenis</th>
+                                    <th>Nominal</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allTransactionTable">
+                                <!-- All transactions will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Menu Management View -->
+                <div id="menuView" class="admin-view">
+                    <h2 class="page-title">Kelola Menu</h2>
+
+                    <!-- Add New Menu Form -->
+                    <div class="form-container">
+                        <h3 class="form-section-title">Tambah Menu Baru</h3>
+                        <form id="addMenuForm" class="add-menu-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="newMenuName">Nama Menu</label>
+                                    <input type="text" id="newMenuName" placeholder="Contoh: Otak-Otak Pedas" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newMenuPrice">Harga (Rp)</label>
+                                    <input type="number" id="newMenuPrice" placeholder="Contoh: 15000" min="0" required>
+                                </div>
+                                <div class="form-group form-group-button">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn-add-menu">
+                                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                        Tambah Menu
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Menu List -->
+                    <h3 class="form-section-title">Daftar Menu</h3>
+                    <div class="table-container">
+                        <table class="menu-edit-table">
+                            <thead>
+                                <tr>
+                                    <th>Nama Menu</th>
+                                    <th>Harga</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="menuEditTable">
+                                <!-- Menu items will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Profile Management View -->
+                <div id="profileView" class="admin-view">
+                    <div class="profile-view-header">
+                        <h2 class="page-title">Kelola Profil Perusahaan</h2>
+                        <button onclick="previewProfile()" class="btn-preview">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            Preview Profil
+                        </button>
+                    </div>
+
+                    <div class="form-container">
+                        <form id="profileForm">
+                            <h3 class="form-section-title">Informasi Dasar</h3>
+
+                            <div class="form-group">
+                                <label for="companyName">Nama Perusahaan</label>
+                                <input type="text" id="companyName" placeholder="Contoh: Otak-Otak UMKM" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyTagline">Tagline</label>
+                                <input type="text" id="companyTagline" placeholder="Contoh: Otak-Otak Segar & Lezat"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyDescription">Deskripsi Hero</label>
+                                <textarea id="companyDescription" rows="3"
+                                    placeholder="Deskripsi singkat untuk hero section..." required></textarea>
+                            </div>
+
+                            <h3 class="form-section-title">Tentang Kami</h3>
+
+                            <div class="form-group">
+                                <label for="aboutParagraph1">Paragraf 1</label>
+                                <textarea id="aboutParagraph1" rows="3"
+                                    placeholder="Paragraf pertama tentang perusahaan..." required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="aboutParagraph2">Paragraf 2</label>
+                                <textarea id="aboutParagraph2" rows="3"
+                                    placeholder="Paragraf kedua tentang perusahaan..." required></textarea>
+                            </div>
+
+                            <h3 class="form-section-title">Misi & Visi</h3>
+
+                            <div class="form-group">
+                                <label for="companyMission">Misi Perusahaan</label>
+                                <textarea id="companyMission" rows="3" placeholder="Misi perusahaan Anda..."
+                                    required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyVision">Visi Perusahaan</label>
+                                <textarea id="companyVision" rows="3" placeholder="Visi perusahaan Anda..."
+                                    required></textarea>
+                            </div>
+
+                            <h3 class="form-section-title">Nilai-Nilai Perusahaan</h3>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="value1Title">Nilai 1 - Judul</label>
+                                    <input type="text" id="value1Title" placeholder="Contoh: Kualitas Terjamin"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="value1Desc">Nilai 1 - Deskripsi</label>
+                                    <input type="text" id="value1Desc" placeholder="Deskripsi singkat..." required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="value2Title">Nilai 2 - Judul</label>
+                                    <input type="text" id="value2Title" placeholder="Contoh: Higienis & Aman" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="value2Desc">Nilai 2 - Deskripsi</label>
+                                    <input type="text" id="value2Desc" placeholder="Deskripsi singkat..." required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="value3Title">Nilai 3 - Judul</label>
+                                    <input type="text" id="value3Title" placeholder="Contoh: Kepuasan Pelanggan"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="value3Desc">Nilai 3 - Deskripsi</label>
+                                    <input type="text" id="value3Desc" placeholder="Deskripsi singkat..." required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="value4Title">Nilai 4 - Judul</label>
+                                    <input type="text" id="value4Title" placeholder="Contoh: Inovasi Berkelanjutan"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="value4Desc">Nilai 4 - Deskripsi</label>
+                                    <input type="text" id="value4Desc" placeholder="Deskripsi singkat..." required>
+                                </div>
+                            </div>
+
+                            <h3 class="form-section-title">Informasi Kontak</h3>
+
+                            <div class="form-group">
+                                <label for="companyPhone">Nomor Telepon</label>
+                                <input type="tel" id="companyPhone" placeholder="Contoh: 082315750980" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyAddress">Alamat</label>
+                                <input type="text" id="companyAddress" placeholder="Contoh: Jakarta, Indonesia"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyHours">Jam Buka</label>
+                                <input type="text" id="companyHours" placeholder="Contoh: 08:00 - 20:00" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="companyInstagram">Instagram</label>
+                                <input type="text" id="companyInstagram" placeholder="Contoh: @otakotakumkm" required>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-large">Simpan Semua Perubahan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="bottom-nav-item active" data-view="dashboard">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Dashboard</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-view="transactions">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">Transaksi</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-view="menu">
+                <span class="nav-icon">🍽️</span>
+                <span class="nav-text">Menu</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-view="profile">
+                <span class="nav-icon">🏢</span>
+                <span class="nav-text">Profil</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Login Admin</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" placeholder="Masukkan password admin" required autofocus>
+                </div>
+                <div class="login-buttons">
+                    <button type="submit" class="btn-primary">Login</button>
+                    <button type="button" class="btn-cancel" id="cancelLogin">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QRIS Payment Modal -->
+    <div id="qrisModal" class="modal">
+        <div class="modal-content qris-modal">
+            <h2>Pembayaran DANA</h2>
+
+            <div class="qris-container">
+                <div class="qris-info">
+                    <p class="merchant-name">Otak-Otak</p>
+                    <p class="payment-amount" id="qrisAmount">Rp 0</p>
+                </div>
+
+                <!-- Direct Payment Link (Primary Method) -->
+                <div class="payment-link-section">
+                    <p class="payment-instruction">📱 <strong>Cara 1: Klik tombol di bawah</strong></p>
+                    <a href="#" id="danaPaymentLink" class="btn-dana" target="_blank">
+                        Bayar dengan DANA
+                    </a>
+                    <p class="payment-note">Tombol akan membuka aplikasi DANA di HP Anda</p>
+                </div>
+
+                <div class="payment-divider">
+                    <span>ATAU</span>
+                </div>
+
+                <!-- QR Code (Secondary Method) -->
+                <div class="qris-code-section">
+                    <p class="payment-instruction">📷 <strong>Cara 2: Scan QR Code</strong></p>
+                    <div class="qris-code" id="qrisCode">
+                        <div class="qr-placeholder">
+                            <p>⚠️ QR Code memerlukan koneksi internet</p>
+                            <p style="font-size: 12px; color: #666;">Gunakan Cara 1 di atas untuk pembayaran</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-info-box">
+                    <p><strong>Nomor Tujuan DANA:</strong> 082315750980</p>
+                    <p><strong>Nama:</strong> Otak-Otak UMKM</p>
+                </div>
+            </div>
+
+            <div class="qris-buttons">
+                <button type="button" class="btn-primary" id="confirmPayment">Konfirmasi Pembayaran</button>
+                <button type="button" class="btn-cancel" id="cancelPayment">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content rating-modal">
+            <h2>Beri Rating Kami! ⭐</h2>
+            <p class="rating-subtitle">Bagaimana pengalaman Anda memesan di Otak-Otak?</p>
+
+            <div class="rating-stars" id="ratingStars">
+                <span class="star" data-rating="1">★</span>
+                <span class="star" data-rating="2">★</span>
+                <span class="star" data-rating="3">★</span>
+                <span class="star" data-rating="4">★</span>
+                <span class="star" data-rating="5">★</span>
+            </div>
+
+            <div class="rating-text" id="ratingText">Pilih rating Anda</div>
+
+            <div class="feedback-section">
+                <label for="ratingFeedback" class="feedback-label">Pesan atau Saran (Opsional)</label>
+                <textarea id="ratingFeedback" class="feedback-input" placeholder="Ceritakan pengalaman Anda..."
+                    maxlength="200" rows="3"></textarea>
+            </div>
+
+            <div class="rating-buttons">
+                <button type="button" class="btn-primary" id="submitRating" disabled>Kirim Rating</button>
+                <button type="button" class="btn-cancel" id="skipRating">Lewati</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="otak-otak.js"></script>
+</body>
+
+</html>
